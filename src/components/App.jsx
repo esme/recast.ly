@@ -22,12 +22,13 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    //console.log('component did mount')
     // console.log('dshflsdfjklds', this.props.searchYouTube(options('dogs', 5, YOUTUBE_API_KEY), (data) => console.log(data.items)) )
     this.props.searchYouTube(options(this.state.searchText, 5, YOUTUBE_API_KEY), (data) => {
+      data = data.items ? data.items : data;
+      console.log('component did mount')
       this.setState({
-        currentVideo: data.items[0],
-        videoList: data.items
+        videoList: data,
+        currentVideo: data[0]
       });
     });
   }
@@ -39,21 +40,23 @@ class App extends React.Component {
   }
 
   handleSearch(e) {
-    this.setState({
-      searchText: e.target.value
-    })
+    // this.setState({
+    //   searchText: e.target.value
+    // })
+    this.props.searchYouTube(options(e.target.value, 5, YOUTUBE_API_KEY), (data) => {
+      console.log(data.items)
+      data = data.items ? data.items : data;
+      this.setState({
+        videoList: data,
+        currentVideo: data[0]
+      });
+    });
 
   }
 
   handleSubmit() {
     // console.log(this.state.searchText)
-    this.props.searchYouTube(options(this.state.searchText, 5, YOUTUBE_API_KEY), (data) => {
-      console.log(data.items)
-      this.setState({
-        currentVideo: data.items[0],
-        videoList: data.items
-      });
-    });
+
   }
 
   render() {

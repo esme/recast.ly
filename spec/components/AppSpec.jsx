@@ -65,7 +65,6 @@ describe('App', function() {
 
     it('should load live data when app is initialized', function() {
       expect(searchYouTubeStub.called).to.be.true;
-
       var videoEntryTitleElements = scryRenderedDOMComponentsWithClass(app, 'video-list-entry-title');
 
       videoEntryTitleElements.forEach((videoEntryTitle, i) =>
